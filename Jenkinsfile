@@ -37,9 +37,9 @@ pipeline {
              id: 'userInput', message: 'Enter password for Artifactory', parameters: [
              
              [$class: 'TextParameterDefinition', defaultValue: 'password', description: 'Artifactory Password', name: 'password']])
-             
+             sh '''
              jfrog rt c artifactory-demo --url=http://34.68.191.118:8081/artifactory --user=admin --password=+userInput
-             
+             '''
           echo '********* Configure Artifactory Finished **********'
         }
        }
@@ -71,7 +71,7 @@ stage('Deployment Stage'){
             {
               echo '********* Uploading to Artifactory is Started **********'
               /*bat 'jfrog rt u "dist/*.exe" generic-local'*/
-              bat 'Powershell.exe -executionpolicy remotesigned -File build_script.ps1'
+              //bat 'Powershell.exe -executionpolicy remotesigned -File build_script.ps1'
               echo '********* Uploading Finished **********'
             }
           }
