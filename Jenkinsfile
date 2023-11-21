@@ -4,18 +4,22 @@ pipeline {
     stage('Clean Reports')
     {
       steps{
+        sh '''
         echo '********* Cleaning Workspace Stage Started **********'
         rm -rf test-reports
         echo '********* Cleaning Workspace Stage Finished **********'
+        '''
       }
     }
     
     stage('Build Stage') {
       steps {
+        sh '''
         echo '********* Build Stage Started **********'
         pip install -r requirements.txt
         pyinstaller --onefile app.py
         echo '********* Build Stage Finished **********'
+        '''
         }
     }
     stage('Testing Stage') {
@@ -28,7 +32,6 @@ pipeline {
     stage('Configure Artifactory'){
       steps{
         script {
-          
           echo '********* Configure Artifactory Started **********'
              def userInput = input(
              id: 'userInput', message: 'Enter password for Artifactory', parameters: [
