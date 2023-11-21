@@ -6,7 +6,7 @@ pipeline {
       steps{
         sh '''
         echo '********* Cleaning Workspace Stage Started **********'
-        rm -rf test-reports
+        rm -rf test-reports/
         echo '********* Cleaning Workspace Stage Finished **********'
         '''
       }
@@ -16,7 +16,7 @@ pipeline {
       steps {
         sh '''
         echo '********* Build Stage Started **********'
-        pip install -r requirements.txt
+        pip3 install -r requirements.txt
         pyinstaller --onefile app.py
         echo '********* Build Stage Finished **********'
         '''
@@ -25,7 +25,7 @@ pipeline {
     stage('Testing Stage') {
       steps {
         echo '********* Test Stage Started **********'
-        python test.py
+        python3 test.py
         echo '********* Test Stage Finished **********'
       }   
     }
@@ -55,7 +55,7 @@ stage('Deployment Stage'){
                 echo '********* Deploy Stage Started **********'
                 timeout(time : 1, unit : 'MINUTES')
                 {
-                python app.py
+                python3 app.py
                 }
                 echo '********* Deploy Stage Finished **********'
             }
